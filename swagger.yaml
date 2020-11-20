@@ -1,0 +1,552 @@
+swagger: "2.0"
+info:
+  description: "Game Database Documentation."
+  version: "1.0.0"
+  title: "Stone Scissors Paper Games"
+host: "127.0.0.1:8080"
+basePath: "/api/"
+
+tags:
+- name: "user"
+  description: "management account"
+- name: "biodata"
+  description: "Detail information about user"
+- name: "history"
+  description: "Recent Information about game history"
+
+schemes:
+- "https"
+- "http"
+
+paths:
+  /user/signUp:
+    post:
+      tags:
+      - "user"
+      summary: "Add a new user"
+      description: "create new account"
+      operationId: "signUpGame"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Account created"
+        required: true
+        schema:
+          $ref: "#/definitions/signUp"
+      responses:
+        "201":
+          description: "Success create new user."
+        "400":
+          description: "email and password required"
+        "500":
+          description: "Server error"    
+  /user/signIn:
+    post:
+      tags: 
+      - "user"
+      summary: "login with registered account"
+      description: "login with registered account"
+      operationId: "signUpUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "SignUp user"
+        required: true
+        schema:
+          $ref: "#/definitions/signIn"
+      responses:
+        "200":
+          description: "signIn success"
+        "400":
+          description: "email and password required"
+        "500":
+          description: "Server error"
+  /user:
+    get:
+      tags: 
+      - "user"
+      summary: "retrive all account"
+      description: "retrive all account"
+      operationId: "getUserAll"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "query with id success"
+        "400":
+          description: "email and password required"
+        "500":
+          description: "server error"
+  /user/{user_id}:
+    get:
+      tags: 
+      - "user"
+      summary: "find account by id"
+      description: "find account by id"
+      operationId: "getUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "user_id"
+        description: "primary key of account"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "header"
+        name: "Authorization"
+        description: "Tokens"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "query with id success"
+        "400":
+          description: "email and password required"
+        "500":
+          description: "server error"
+    put:
+      tags: 
+      - "user"
+      summary: "update account by id"
+      description: "update account by id"
+      operationId: "updateUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "user_id"
+        description: "ID of user_game to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "header"
+        name: "Authorization"
+        description: "Tokens"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Login user on Games"
+        required: true
+        schema:
+          $ref: "#/definitions/userUpdate"
+      responses:
+        "200":
+          description: "Updating data success"
+        "400":
+          description: "Email and password required"
+        "500":
+          description: "Server error"
+    delete:
+      tags: 
+      - "user"
+      summary: "Delete user account by id"
+      description: "Delete user account by id"
+      operationId: "deleteUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "user_id"
+        description: "ID of user_game to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "header"
+        name: "Authorization"
+        description: "Tokens"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Logging in user"
+        required: true
+        schema:
+          $ref: "#/definitions/userDelete"
+      responses:
+        "200":
+          description: "Successfull deleting data"
+        "400":
+          description: "email and password required"
+        "500":
+          description: "server error"
+  
+  /bio:
+    post:
+      tags:
+      - "biodata"
+      summary: "Add detail information about user"
+      description: "Add detail information about user"
+      operationId: "createBiodata"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Bio Created"
+        required: true
+        schema:
+          $ref: "#/definitions/biodataAdd"
+      responses:
+        "201":
+          description: "Success create new biodata"
+        "400":
+          description: "field required"
+        "500":
+          description: "Server error"    
+    get:
+      tags: 
+      - "biodata"
+      summary: "retrive all biodata"
+      description: "retrive all account"
+      operationId: "getBioAll"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "retrivinga all biodata success"
+        "500":
+          description: "server error"   
+  /bio/{user_id}:
+    get:
+      tags: 
+      - "biodata"
+      summary: "find bidata by id"
+      description: "find biodata by id"
+      operationId: "getBiodata"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "user_id"
+        description: "primary key of biodata"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "header"
+        name: "Authorization"
+        description: "Tokens"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "query with id success"
+        "500":
+          description: "server error"
+    put:
+      tags: 
+      - "biodata"
+      summary: "update biodata by id"
+      description: "update biodata by id"
+      operationId: "updateBio"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "user_id"
+        description: "primary key of biodata"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "header"
+        name: "Authorization"
+        description: "Tokens"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "updating data"
+        required: true
+        schema:
+          $ref: "#/definitions/biodataUpdate"
+      responses:
+        "200":
+          description: "Updating data success"
+        "400":
+          description: "field required"
+        "500":
+          description: "Server error"
+    delete:
+      tags: 
+      - "biodata"
+      summary: "Delete information by id"
+      description: "Delete information by id"
+      operationId: "deleteBio"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "user_id"
+        description: "primary Key of biodat"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "header"
+        name: "Authorization"
+        description: "Tokens"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "biodata response"
+        required: true
+        schema:
+          $ref: "#/definitions/biodataDelete"
+      responses:
+        "200":
+          description: "Successfull deleting data"
+        "500":
+          description: "server error"
+          
+  /history:
+    post:
+      tags:
+      - "history"
+      summary: "add information about game result"
+      description: "add information about game result"
+      operationId: "createHistory"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "History Created"
+        required: true
+        schema:
+          $ref: "#/definitions/historyAdd"
+      responses:
+        "201":
+          description: "Success create new biodata"
+        "400":
+          description: "field required"
+        "500":
+          description: "Server error"    
+    get:
+      tags: 
+      - "history"
+      summary: "retrive all biodata"
+      description: "retrive all account"
+      operationId: "getHistoryAll"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "retrivinga all biodata success"
+        "500":
+          description: "server error"   
+  /history/{history_id}:
+    get:
+      tags: 
+      - "biodata"
+      summary: "find game result by id"
+      description: "find result by id"
+      operationId: "getHistory"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "history_id"
+        description: "primary key of history"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "header"
+        name: "Authorization"
+        description: "Tokens"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "query with id success"
+        "500":
+          description: "server error"
+    put:
+      tags: 
+      - "history"
+      summary: "update history by id"
+      description: "update history by id"
+      operationId: "updateHistory"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "history_id"
+        description: "primary key of history"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "header"
+        name: "Authorization"
+        description: "Tokens"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "updating data"
+        required: true
+        schema:
+          $ref: "#/definitions/historyUpdate"
+      responses:
+        "200":
+          description: "Updating data success"
+        "400":
+          description: "field required"
+        "500":
+          description: "Server error"
+    delete:
+      tags: 
+      - "history"
+      summary: "Delete game result by id"
+      description: "Delete game result by id"
+      operationId: "deleteHistory"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "history_id"
+        description: "primary Key of history"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "header"
+        name: "Authorization"
+        description: "Tokens"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "history response"
+        required: true
+        schema:
+          $ref: "#/definitions/historyDelete"
+      responses:
+        "200":
+          description: "Successfull deleting data"
+        "500":
+          description: "server error"
+          
+
+definitions:
+  signUp:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+      password:
+        type: "string"
+  
+  signIn:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+      password:
+        type: "string"
+  
+  userUpdate:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+      password:
+        type: "string"
+        
+  userDelete:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+      password:
+        type: "string"
+        
+  biodataAdd:
+    type: "object"
+    properties:
+      bio_id:
+        type: "integer"
+      first_name:
+        type: "string"
+      last_name:
+        type: "string"
+  
+  biodataUpdate:
+    type: "object"
+    properties:
+      bio_id:
+        type: "integer"
+      first_name:
+        type: "string"
+      last_name:
+        type: "string"
+  
+  biodataDelete:
+    type: "object"
+    properties:
+      bio_id:
+        type: "integer"
+      first_name:
+        type: "string"
+      last_name:
+        type: "string"
+        
+  historyAdd:
+    type: "object"
+    properties:
+      history_id:
+        type: "integer"
+      result:
+        type: "string"
+        
+  historyUpdate:
+    type: "object"
+    properties:
+      history_id:
+        type: "integer"
+      result:
+        type: "string"
+        
+  historyDelete:
+    type: "object"
+    properties:
+      history_id:
+        type: "integer"
+      result:
+        type: "string"
+  

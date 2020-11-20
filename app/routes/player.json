@@ -1,0 +1,93 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0", 
+        "title": "Backend service for Stone Scissors Paper games",
+        "description": " ",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+
+    "host": "127.0.01:8080/api/",
+    "basePath": "/user",
+    "tags": [{"name": "Users","description": "API for users in the system"}],
+    "schemes": [ "http"],
+    "consumes": ["application/json"],
+    "produces": ["application/json" ],
+    "paths": {
+        "/": {
+            "get": {
+                "tags": ["Users"],
+                "summary": "Get all users in system",
+                "responses": {
+                  "200": {
+                    "description": "OK",
+                    "schema": {
+                        "type":"array",
+                        "items":{
+                            "type":"object",
+                            "properties":{
+                                "id":{
+                                    "type":"integer",
+                                    "example" : 1
+                                },
+                                "email":{
+                                    "type":"string",
+                                    "example":"maemunah@gmail.co.uk"
+                                },
+                                "password":{
+                                    "type":"string",
+                                    "example":"23rd2FMI8YS8A9F8H983"
+                                }
+                            }
+                        } 
+                    }
+                  }
+                }
+            },
+            "post": {
+                "tags": ["Users"],
+                "summary":"put data into database",
+                "description": "Create new user in system",
+                "parameters": [
+                  {
+                    "name": "user",
+                    "in": "body",
+                    "description": "User that we want to create"
+                  }
+                ],
+                "produces": [
+                  "application/json"
+                ],
+                "responses": {
+                  "200": {
+                    "description": "New user is created",
+                    "schema": {
+                        "type":"array",
+                        "items":{
+                            "type":"object",
+                            "properties":{
+                                "id":{
+                                    "type":"integer",
+                                    "example" : 1
+                                },
+                                "email":{
+                                    "type":"string",
+                                    "example":"maemunah@gmail.co.uk"
+                                },
+                                "password":{
+                                    "type":"string",
+                                    "example":"23rd2FMI8YS8A9F8H983"
+                                }
+                            }
+                        } 
+                    }
+                  }
+                }
+            }
+        }
+    }
+    
+}

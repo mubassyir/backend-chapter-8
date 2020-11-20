@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head'); %>
+</head>
+<body>
+    <header>
+        <%- include('../partials/header'); %>
+    </header>
+    <div class="container mt-5">
+        <div class="card mx-5">
+            <h5 class="card-header">Update History</h5>
+            <div class="card-body">
+                <form action="/history_update/<%=history_id%>" method="POST">
+                    <div class="form-group">
+                      <label for="formGroupExampleInput2">result</label>
+                      <input type="text" class="form-control" name="result">
+                    </div>
+                    <button type="submit" class="btn btn-info" data-toggle="modal">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+   
+      <%- include('../partials/script.ejs'); %>
+</body>
+</html>
