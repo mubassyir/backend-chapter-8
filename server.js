@@ -9,8 +9,7 @@ const PORT = process.env.PORT ||8080;
 require('dotenv').config();
 
 let corsOption = {
-    origin : 'http://localhost:8080 ',
-    origin : 'http://localhost:3000 '   
+    origin : 'http://localhost:8080 '   
 }
 
 //Ejs Setting

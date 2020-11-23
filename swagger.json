@@ -211,6 +211,15 @@
             "description": "Tokens",
             "required": true,
             "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "updating account",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/userUpdate"
+            }
           }
         ],
         "responses": {
