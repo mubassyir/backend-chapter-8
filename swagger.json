@@ -754,20 +754,7 @@
         }
       }
     },
-    "biodataDelete": {
-      "type": "object",
-      "properties": {
-        "bio_id": {
-          "type": "integer"
-        },
-        "first_name": {
-          "type": "string"
-        },
-        "last_name": {
-          "type": "string"
-        }
-      }
-    },
+    
     "historyAdd": {
       "type": "object",
       "properties": {

@@ -3,6 +3,8 @@ const User = db.user;
 const passport = require("passport");
 require("../config/passport")(passport);
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const salt = 10;
 
 getToken= (headers)=> {
   if (headers && headers.authorization){
@@ -108,49 +110,44 @@ exports.findOne = (req, res) => {
 
 // update user
 exports.update = (req, res) => {
-  let token = getToken(req.headers);
   let id = req.params.user_id;
-  if(token){
-    User.update(req.body, {
-      where: { id: id },
-    })
-      .then((num) => {
-        if (num == 1) {
-          res.send({message: "updating user success"})
-        } else {
-          res.send({
-            message: `Cannot update user with id=${id} `,
-          });
-        }
-      })
-      .catch((err) => {
-        res.status(500).send({
-          message: err.message || `Errot updating user with ${id}`,
+  let {email,password} = req.body;
+  let hash = bcrypt.hashSync(password, salt);
+
+  User.update({email:email,password:hash}, {
+    where: { id: id }}).then((num) => {
+      if (num == 1) {
+        res.send({message: "updating user success"})
+      } else {
+        res.send({
+          message: `Cannot update user with id=${id} `,
         });
+      }}).catch((err) => {
+      res.status(500).send({
+        message: err.message || `Errot updating user with ${id}`,
       });
-  };
-}
+  });
+};
 
 exports.delete = (req, res) => {
   const user_id = req.params.user_id;
-  let token=getToken(req.headers);
-  if(token){
-    User.destroy({ where: { id: user_id } })
-    .then((num) => {
-      if (num == 1) {
-        res.send({message:`succesfully delete data with id=${user_id}`});
-      } else {
-        res.send({
-          message: `Cannot delete user with id=${user_id}`,
-        });
-      }
-    })
-    .catch((err) => {
+  
+  User.destroy({ where: { id: user_id } })
+  .then((num) => {
+    if (num == 1) {
+      res.send({message:`succesfully delete data with id=${user_id}`});
+    } else {
       res.status(500).send({
-        message: err.message || `Could not delete user with ${user_id}`,
+        message: `Cannot delete user with id=${user_id}`,
       });
+    }
+  })
+  .catch((err) => {
+    res.status(500).send({
+      message: err.message || `Could not delete user with ${user_id}`,
     });
-  }
+  });
+  
 };
 
 // delele all

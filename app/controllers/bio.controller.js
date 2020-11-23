@@ -18,7 +18,7 @@ exports.create = (req, res) => {
   };
 
   Bio.create(bio) .then(() => {
-      res.send({message: "creating User success"});
+      res.send({message: "creating biodata success"});
     })
     .catch((err) => {
       res.status(500).send({
@@ -63,14 +63,14 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   let id = req.params.id;
   Bio.update(req.body, {
-    where: { bio_id: id },
+    where: { user_id: id },
   }).then((num) => {
       if (num == 1) {
         res.send({
           message: "Bio data updated success",
         });
       } else {
-        res.send({
+        res.status(500).send({
           message: `Cannot update Bio with id=${id} `,
         });
       }
@@ -86,11 +86,11 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   let id = req.params.id;
 
-  Bio.destroy({ where: { bio_id: id } }).then((num) => {
+  Bio.destroy({ where: { user_id: id } }).then((num) => {
       if (num == 1) {
         res.send({message: "Deleting user succes"});
       } else {
-        res.send({
+        res.code(500).send({
           message: `Cannot delete user with id=${id}`,
         });
       }
