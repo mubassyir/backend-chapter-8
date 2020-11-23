@@ -6,13 +6,13 @@ require('../config/passport')(passport);
 module.exports = (user) => {
     const userController = require("../controllers/user.controller.js");
     
-    router.post("/signUp",userController.signUp);
-    router.post("/signIn",userController.signIn);
-    router.get("/",passport.authenticate('jwt', { session: false}),userController.findAll);
-    router.get("/:user_id",passport.authenticate('jwt', { session: false}),userController.findOne);
-    router.put("/:user_id",passport.authenticate('jwt', { session: false}),userController.update);
-    router.delete("/:user_id",passport.authenticate('jwt', { session: false}),userController.delete);
-    router.delete("/",passport.authenticate('jwt', { session: false}),userController.deleteAll);
+    router.post("/",userController.createUser);
+    router.get("/",userController.findAll);
+    // router.get("/",userController.findAll);
+    // router.get("/:user_id",userController.findOne);
+    router.put("/:user_id",userController.update);
+    router.delete("/:user_id",userController.delete);
+    router.delete("/",userController.deleteAll);
     
     //path
     user.use("/api/user", router);
